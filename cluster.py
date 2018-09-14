@@ -6,17 +6,17 @@ Created on Thu Sep 13 11:55:58 2018
 """
 
 import csv
-#import numpy as np
+import numpy as np
 import datetime
 from dateutil.relativedelta import relativedelta
 
 from utils.dataclass import Quality, RD, Sex, Laterality
 
+# Load Data
 path = 'C:/Users/Diego/Dropbox/INESC/SCREEN-DR/Data/Tables/'
 csv_file = 'BigTable.csv';
-
+# Read CSV
 bigtable = []
-
 with open(path + csv_file) as csvfile:
     readCSV = csv.reader(csvfile, delimiter=';')
     for row in readCSV:
@@ -24,10 +24,9 @@ with open(path + csv_file) as csvfile:
 
 header = bigtable[0]
 eye_data = bigtable[1:]
-
+# Prepare data 
 params = []
 grading = []
-
 for data in eye_data:
     
     rid = data[0]    # id
@@ -52,3 +51,48 @@ for data in eye_data:
         rd_grad = RD[str_rd].value   # retinopathy
         grading.append(rd_grad)
         
+params = np.array(params)
+params.astype(int)     
+
+
+'''
+Plot Data
+'''
+
+import matplotlib.pyplot as plt
+#from mpl_toolkits.mplot3d import Axes3D
+
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+
+ax.scatter(params[:,1].astype(int),
+           params[:,2].astype(int),
+           params[:,3].astype(int),
+           c='r', marker='o')
+
+ax.set_xlabel('Age')
+ax.set_ylabel('Laterality')
+ax.set_zlabel('Sex')
+
+plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
