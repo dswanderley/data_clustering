@@ -60,16 +60,20 @@ Plot Data
 '''
 
 import matplotlib.pyplot as plt
-#from mpl_toolkits.mplot3d import Axes3D
+from mpl_toolkits.mplot3d import Axes3D
 
 
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 
-ax.scatter(params[:,1].astype(int),
-           params[:,2].astype(int),
-           params[:,3].astype(int),
-           c='r', marker='o')
+colors = ['w', 'b', 'g', 'r', 'y']
+for k in range(len(grading)):
+    
+    color = colors[grading[k]]
+    ax.scatter(params[k,1].astype(int),
+               params[k,2].astype(int),
+               params[k,3].astype(int),
+               c=color, marker='o')
 
 ax.set_xlabel('Age')
 ax.set_ylabel('Laterality')
